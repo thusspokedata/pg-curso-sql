@@ -69,3 +69,32 @@ TRUNCATE TABLE users;
 -- It does not delete the table itself, only empties its data. 
 -- Unlike DELETE, TRUNCATE is not logged at the row level, 
 -- meaning you cannot undo the operation with a transaction.
+
+-- Select various name manipulations
+SELECT
+    id,
+    UPPER(name) AS upper_name,
+    LOWER(name) AS lower_name,
+    LENGTH(name) AS length, -- Get the length of the name
+    LENGTH(name) * 2 AS operation, -- Perform a calculation with the length
+    '*' || ' - ' || id || ' -' || name || '- ' as barcode,
+    CONCAT(id, ' - ', name) as concatenated,
+    name
+FROM
+    users;
+
+-- Select names, split into first and last names
+SELECT
+    name,
+    SUBSTRING(name, 0, POSITION(' ' IN name)) AS first_name,
+    SUBSTRING(name, POSITION(' ' IN name) + 1) AS last_name,
+    TRIM(SUBSTRING(name, POSITION(' ' IN name))) AS trimmed_last_name
+FROM
+    users;
+
+-- Update to set first and last names
+UPDATE
+    users
+SET
+    first_name = SUBSTRING(name, 0, POSITION(' ' IN name)),
+    last_name = SUBSTRING(name, POSITION(' ' IN name) + 1);
