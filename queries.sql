@@ -98,3 +98,88 @@ UPDATE
 SET
     first_name = SUBSTRING(name, 0, POSITION(' ' IN name)),
     last_name = SUBSTRING(name, POSITION(' ' IN name) + 1);
+
+SELECT
+	first_name,
+	last_name,
+	followers
+FROM
+	users
+WHERE
+	-- followers > 4600 AND followers < 4700
+	followers BETWEEN 4601 AND 4699
+ORDER BY
+	followers ASC;
+
+
+SELECT
+	COUNT(*) AS total_users,
+	MIN(followers) AS min_followers,
+	MAX(followers) AS max_followers,
+	AVG(followers) as avg_followers,
+	ROUND(AVG(followers)) as avg_followers_round,
+	ROUND(AVG(followers), 2) as avg_followers_round_two_decimals,
+	SUM(followers) / count(*) as avg_manual
+FROM
+	users;
+
+SELECT
+	first_name,
+	last_name,
+	followers
+FROM
+	users
+WHERE
+	followers = 4999
+	OR followers = 4;
+
+SELECT
+	COUNT(*),
+	followers
+FROM
+	users
+WHERE
+	followers = 4999
+	OR followers = 4
+GROUP BY
+	followers;
+
+SELECT
+	COUNT(*),
+	followers
+FROM
+	users
+WHERE
+	followers BETWEEN 4601 AND 4999
+GROUP BY
+	followers
+ORDER BY
+	followers ASC;
+
+SELECT
+	COUNT(*) as total,
+	country
+FROM
+	users
+GROUP BY
+	country
+HAVING
+	COUNT(*) > 5
+ORDER BY
+	COUNT(*)
+	DESC;
+
+select DISTINCT country from users;
+
+SELECT
+	count(*),
+	substring(email, position('@' IN email) + 1) AS DOMAIN
+FROM
+	users
+GROUP BY
+	substring(email, position('@' IN email) + 1)
+HAVING
+	count(*) > 1
+ORDER BY
+	count(*) ASC;
+
